@@ -1,5 +1,14 @@
 
-struct foo {
-  int bar;
-  int* bar_pointer;
+struct A {
+  int val;
+}
+
+class B {
+  int val;
+  A struct_val;
+
+public:
+  int test() {
+    return 1;
+  }
 }
