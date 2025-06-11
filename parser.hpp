@@ -7,7 +7,7 @@
 class ClangParser {
 public:
   ClangParser(const std::vector<std::string>& args);
-  ~ClangParser();
+  ~ClangParser();     // Since we describe descructor, rule of 5
 
   void traverse();
 private:

@@ -23,5 +23,5 @@ For the timeline of this project, the main components are:
     3. Display the graph
 
     
-As an initial checkpoint for this project, it would be good to isolate all functions and classes
-into some sort of container and traverse the container to print out all these members
+The current checkpoint to reach is to create a node structure to contain the data of all classes/structs/functions/etc. such that it's easy to sort them accordingly
+and unwrap them
