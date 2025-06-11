@@ -15,7 +15,7 @@ struct Node {
   std::string sourceFile;
 
   // Functions
-  Node createNode(std::string id, NodeKind kind, std::string file);             // Want the return to move from function to caller, not create copy
+  Node(std::strind _id, NodeKind _kind, std::string _file) : id(std::move(_id)), kind{_kind}, sourceFile(std::move(_file)) {} 
                                                                                 
   // For implementation later:
   std::vector<Node*> outgoing;          // What functions use this 
@@ -33,16 +33,16 @@ struct Edge {
   Node* to;
   EdgeKind kind;
 
-  // Functions
-  Edge createEdge(Node& from, Node& to);
+  // We make calls to this constructor with specific kinds in mind
+
 };
 
 class Graph {
 public:
   Graph() = default;
 
-  // Might want to change return to bool to get status on if insertion was good
-  void insertNode(Node& node);
+  // -> We only create a node object when inside graph
+  Node* insertNode(std::string& id, NodeKind kind, std:string& file);
   void insertEdge(Edge& edge);
   
 private:

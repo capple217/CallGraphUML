@@ -25,3 +25,7 @@ For the timeline of this project, the main components are:
     
 The current checkpoint to reach is to create a node structure to contain the data of all classes/structs/functions/etc. such that it's easy to sort them accordingly
 and unwrap them
+
+    - The graph object we create will be a foundation used within the LibClang file to store
+        the AST nodes when traversing its tree
+
