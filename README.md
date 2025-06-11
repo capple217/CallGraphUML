@@ -22,5 +22,6 @@ For the timeline of this project, the main components are:
     2. Building a backend for UML graph that connects all these points
     3. Display the graph
 
-Probably makes sense to start with (1) so that we know how we store these objects for future use.
     
+As an initial checkpoint for this project, it would be good to isolate all functions and classes
+into some sort of container and traverse the container to print out all these members
