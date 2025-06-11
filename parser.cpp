@@ -15,7 +15,7 @@ ClangParser::ClangParser(const std::vector<std::string>& args) : args_{args} {
       continue;
     }
 
-    units_.emplace_back(unit);          // Still figuring if to use emplace vs push
+    units_.push_back(unit);          // Still figuring if to use emplace vs push
   }
 
 }
@@ -29,6 +29,18 @@ ClangParser::~ClangParser() {
 
 CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClientData clientData) {
   auto kind = clang_getCursorKind(cursor);
+  auto* parser = static_cast<ClangParser*>(clientData);
+  CXString name = clang_getCursorSpelling(cursor);
+  std::string id(clang_getCString(name));
+  clang_disposeString(name);
+
+  // Get file name
+  CXFile fileHandle;
+  unsigned line, col, offset;
+  clang_getSpellingLocation(
+    clang_getCursorLocation(cursor),
+    &fileHandle, &line, &col, &offset);
+  std::string file = clang_getCString(clang_getFileName(fileHandle));
 
   switch (kind) {
     case CXCursor_FunctionDecl:
@@ -36,18 +48,18 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
     case CXCursor_Constructor:
     case CXCursor_Destructor:
     case CXCursor_ConversionFunction: {
-      auto name = clang_getCursorSpelling(cursor);
-      std::cout << "Function: " << clang_getCString(name) << "\n";
-      clang_disposeString(name);
+
+      parser->graph.insertNode(id, NodeKind::Function, file);
+
       break;
         }
 
     case CXCursor_ClassDecl:
-    case CXCursor_StructDecl:
+    case CXCursor_StructDecl:               // Have to eventually seperate this from classes
     case CXCursor_ClassTemplate: {
-      auto name = clang_getCursorSpelling(cursor);
-      std::cout << "Class / Struct: " << clang_getCString(name) << "\n";
-      clang_disposeString(name);
+
+      parser->graph.insertNode(id, NodeKind::Class, file);
+
       break;
         }
     
@@ -60,6 +72,10 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
 void ClangParser::traverse() {
   for (auto unit : units_) {
     CXCursor cursor = clang_getTranslationUnitCursor(unit);
-    clang_visitChildren(cursor, ClangParser::visitor, nullptr);
+    clang_visitChildren(cursor, ClangParser::visitor, this);
   }
+}
+
+void ClangParser::print() {
+  graph.printNodes();
 }

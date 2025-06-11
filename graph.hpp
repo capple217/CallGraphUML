@@ -15,7 +15,7 @@ struct Node {
   std::string sourceFile;
 
   // Functions
-  Node(std::strind _id, NodeKind _kind, std::string _file) : id(std::move(_id)), kind{_kind}, sourceFile(std::move(_file)) {} 
+  Node(std::string _id, NodeKind _kind, std::string _file) : id(std::move(_id)), kind{_kind}, sourceFile(std::move(_file)) {} 
                                                                                 
   // For implementation later:
   std::vector<Node*> outgoing;          // What functions use this 
@@ -26,7 +26,7 @@ enum class EdgeKind {
   Calls,
   Inherits,
   Uses,
-}
+};
 
 struct Edge {
   Node* from;
@@ -34,7 +34,7 @@ struct Edge {
   EdgeKind kind;
 
   // We make calls to this constructor with specific kinds in mind
-
+  
 };
 
 class Graph {
@@ -42,10 +42,11 @@ public:
   Graph() = default;
 
   // -> We only create a node object when inside graph
-  Node* insertNode(std::string& id, NodeKind kind, std:string& file);
-  void insertEdge(Edge& edge);
+  Node* insertNode(std::string id, NodeKind kind, std::string file);
+  void addEdge(Node* from, Node* to, EdgeKind kind);
   
+  void printNodes();
 private:
-  std::unordered_map<std::string, std::unique_pointer<Node>> nodes_;
+  std::unordered_map<std::string, std::unique_ptr<Node>> nodes_;
   std::vector<Edge> edges_;
 };

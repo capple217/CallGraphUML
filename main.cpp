@@ -11,6 +11,7 @@ int main() {
 
   ClangParser parser(args);
   parser.traverse();
+  parser.print();
 
   return 0;
 }
