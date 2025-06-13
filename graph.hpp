@@ -1,3 +1,5 @@
+#pragma once
+
 #include <unordered_map>
 #include <vector>
 #include <string>
@@ -34,7 +36,7 @@ struct Edge {
   EdgeKind kind;
 
   // We make calls to this constructor with specific kinds in mind
-  
+  Edge(Node* _from, Node* _to, EdgeKind _kind) : from{_from}, to{_to}, kind(_kind) {} 
 };
 
 class Graph {

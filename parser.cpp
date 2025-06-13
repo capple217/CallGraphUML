@@ -40,7 +40,9 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
   clang_getSpellingLocation(
     clang_getCursorLocation(cursor),
     &fileHandle, &line, &col, &offset);
-  std::string file = clang_getCString(clang_getFileName(fileHandle));
+    CXString fileCX = clang_getFileName(fileHandle);
+  std::string file = clang_getCString(fileCX);
+  clang_disposeString(fileCX);
 
   switch (kind) {
     case CXCursor_FunctionDecl:
