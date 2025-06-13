@@ -44,6 +44,8 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
   std::string file = clang_getCString(fileCX);
   clang_disposeString(fileCX);
 
+  // Might move all insert renderNodes and edges calls here instead of inside switch
+
   switch (kind) {
     case CXCursor_FunctionDecl:
     case CXCursor_CXXMethod:
@@ -52,6 +54,7 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
     case CXCursor_ConversionFunction: {
 
       parser->graph.insertNode(id, NodeKind::Function, file);
+      renderNodes.insert(id);
 
       break;
         }
@@ -61,6 +64,7 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
     case CXCursor_ClassTemplate: {
 
       parser->graph.insertNode(id, NodeKind::Class, file);
+      renderNodes.insert(id);
 
       break;
         }

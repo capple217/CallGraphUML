@@ -5,6 +5,7 @@
 #include <string>
 
 #include "graph.hpp"
+#include "render.cpp"
 
 class ClangParser {
 public:
