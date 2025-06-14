@@ -29,3 +29,5 @@ and unwrap them
     - The graph object we create will be a foundation used within the LibClang file to store
         the AST nodes when traversing its tree
 
+
+For this program to work, we need both llvm and graphviz downloaded

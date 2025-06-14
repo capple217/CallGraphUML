@@ -20,6 +20,16 @@ int main() {
     std::cerr << "Failed to generate PNG from DOT.\n";
     return 1;
   }
+    // ------------------------------
+  // Now auto‑open the image:
+#if defined(__APPLE__)
+    system("open callgraph.png");
+#elif defined(_WIN32)
+    system("start callgraph.png");
+#else
+    system("xdg-open callgraph.png");
+#endif
+  // ------------------------------
 
   std::cout << "callgraph.png generated successfully.\n";
   return 0;

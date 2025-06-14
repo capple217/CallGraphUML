@@ -54,7 +54,7 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
     case CXCursor_ConversionFunction: {
 
       parser->graph.insertNode(id, NodeKind::Function, file);
-      renderNodes.insert(id);
+      renderNodes.push_back(id);
 
       break;
         }
@@ -64,7 +64,7 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
     case CXCursor_ClassTemplate: {
 
       parser->graph.insertNode(id, NodeKind::Class, file);
-      renderNodes.insert(id);
+      renderNodes.push_back(id);
 
       break;
         }
