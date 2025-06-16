@@ -22,12 +22,8 @@ For the timeline of this project, the main components are:
     2. Building a backend for UML graph that connects all these points
     3. Display the graph
 
-    
-The current checkpoint to reach is to create a node structure to contain the data of all classes/structs/functions/etc. such that it's easy to sort them accordingly
-and unwrap them
 
-    - The graph object we create will be a foundation used within the LibClang file to store
-        the AST nodes when traversing its tree
-
-
-For this program to work, we need both llvm and graphviz downloaded
+Upcoming Checkpoint:
+    - Keep track of current function we're in and the class it may be a part of (class implementation can be delayed)
+    - Given we have a function that we're inside (trivial), mark down the function calls inside 
+    - Mark all functions that are called and not existing
