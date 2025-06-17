@@ -26,3 +26,4 @@ Upcoming Checkpoint:
 Note:
     Currently there is no implementation for adding any files we want to be scanned. That features is to be added shortly to make this application
     functional.
+    - Future versions of the program may allow saving files so that we can add more as we go and then print out screen when we decide
