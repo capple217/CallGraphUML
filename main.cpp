@@ -8,6 +8,7 @@ int main() {
   std::vector<std::string> args;
   args.push_back("file.cpp");
   args.push_back("file2.cpp");
+  args.push_back("compiler.cpp");
 
   ClangParser parser(args);
   parser.traverse();

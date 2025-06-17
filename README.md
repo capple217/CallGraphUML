@@ -22,3 +22,7 @@ Upcoming Checkpoint:
     - Keep track of current function we're in and the class it may be a part of (class implementation can be delayed)
     - Given we have a function that we're inside (trivial), mark down the function calls inside 
     - Mark all functions that are called and not existing
+
+Note:
+    Currently there is no implementation for adding any files we want to be scanned. That features is to be added shortly to make this application
+    functional.
