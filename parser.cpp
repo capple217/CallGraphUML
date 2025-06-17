@@ -28,8 +28,11 @@ ClangParser::~ClangParser() {
 }
 
 CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClientData clientData) {
+
   auto kind = clang_getCursorKind(cursor);
-  auto* parser = static_cast<ClangParser*>(clientData);
+  auto* parser = static_cast<ClangParser*>(clientData); // Our instantiation
+                                                        
+  // Fill node name
   CXString name = clang_getCursorSpelling(cursor);
   std::string id(clang_getCString(name));
   clang_disposeString(name);
@@ -50,13 +53,19 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
     case CXCursor_FunctionDecl:
     case CXCursor_CXXMethod:
     case CXCursor_Constructor:
-    case CXCursor_Destructor:
-    case CXCursor_ConversionFunction: {
+    case CXCursor_Destructor: {
 
-      parser->graph.insertNode(id, NodeKind::Function, file);
+      Node* fnNode = parser->graph.insertNode(id, NodeKind::Function, file);
       renderNodes.push_back(id);
 
-      break;
+      parser->callStack.push_back(fnNode);
+
+      clang_visitChildren(cursor, ClangParser::visitor, clientData);    // Manually traverse our function's internals
+
+      parser->callStack.pop_back();
+
+      // Skip Clang's default recursion since we did ours manually
+      return CXChildVisit_Continue;
         }
 
     case CXCursor_ClassDecl:
@@ -69,9 +78,27 @@ CXChildVisitResult ClangParser::visitor(CXCursor cursor, CXCursor parent, CXClie
       break;
         }
     
+    case CXCursor_CallExpr: {
+      if (parser->callStack.empty()) break;
+      Node* caller = parser->callStack.back();
+
+      CXCursor calleeCursor = clang_getCursorReferenced(cursor);
+      CXString calleeName = clang_getCursorSpelling(calleeCursor);
+      std::string calleeId(clang_getCString(calleeName));
+      clang_disposeString(calleeName);
+
+      // insert callee node and add the edge
+      Node* callee = parser->graph.insertNode(calleeId, NodeKind::Function, file);
+      parser->graph.addEdge(caller, callee, EdgeKind::Calls);
+      renderEdges.emplace_back(caller->id, callee->id);
+
+      break;
+
+        }
     default:
       break;
     }
+
           return CXChildVisit_Recurse;
 }
 

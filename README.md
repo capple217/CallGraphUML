@@ -13,15 +13,10 @@ We use LibClang’s C-API to parse a translation unit, walk its AST, and pick ou
 3. Function-call expressions
 
 
-
-
-
-
 For the timeline of this project, the main components are: 
     1. Parsing through and collecting the classes/function
     2. Building a backend for UML graph that connects all these points
     3. Display the graph
-
 
 Upcoming Checkpoint:
     - Keep track of current function we're in and the class it may be a part of (class implementation can be delayed)
