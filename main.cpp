@@ -6,9 +6,13 @@
 int main() {
 
   std::vector<std::string> args;
-  args.push_back("testcases/file.cpp");
-  args.push_back("testcases/file2.cpp");
-  args.push_back("testcases/compiler.cpp");
+//  args.push_back("testcases/file.cpp");
+//  args.push_back("testcases/file2.cpp");
+//  args.push_back("testcases/compiler.cpp");
+
+    args.push_back("parser.cpp");
+    args.push_back("render.cpp");
+    args.push_back("graph.cpp");
 
   ClangParser parser(args);
   parser.traverse();
