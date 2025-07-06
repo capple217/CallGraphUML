@@ -12,18 +12,8 @@ We use LibClang’s C-API to parse a translation unit, walk its AST, and pick ou
 
 3. Function-call expressions
 
+    TO-DO:
+        - In the name of making the user experience better, we are going to build a terminal‑based “tree browser” such that we can traverse all of our files
+        and look for whatever we want the program to run.
 
-For the timeline of this project, the main components are: 
-    1. Parsing through and collecting the classes/function
-    2. Building a backend for UML graph that connects all these points
-    3. Display the graph
-
-Upcoming Checkpoint:
-    - Keep track of current function we're in and the class it may be a part of (class implementation can be delayed)
-    - Given we have a function that we're inside (trivial), mark down the function calls inside 
-    - Mark all functions that are called and not existing
-
-Note:
-    Currently there is no implementation for adding any files we want to be scanned. That features is to be added shortly to make this application
-    functional.
-    - Future versions of the program may allow saving files so that we can add more as we go and then print out screen when we decide
+        
