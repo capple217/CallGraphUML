@@ -1,41 +1,79 @@
 #include <iostream>
 #include <clang-c/Index.h>
+#include <vector>
+#include <string>
 
 #include "parser.hpp"
 
-int main() {
-
-  std::vector<std::string> args;
-//  args.push_back("testcases/file.cpp");
-//  args.push_back("testcases/file2.cpp");
-//  args.push_back("testcases/compiler.cpp");
-
-    args.push_back("parser.cpp");
-    args.push_back("render.cpp");
-    args.push_back("graph.cpp");
-
-  ClangParser parser(args);
+bool renderGraph(const std::vector<std::string>& files) {
+  ClangParser parser(files);
   parser.traverse();
   parser.print();
 
   writeDot("callgraph.dot");
-  int result = system("dot -Tpng callgraph.dot -o callgraph.png");
-
-  if (result != 0) {
+  if (system("dot -Tpng callgraph.dot -o callgraph.png") != 0) {
     std::cerr << "Failed to generate PNG from DOT.\n";
-    return 1;
+    return false;
   }
-    // ------------------------------
-  // Now auto‑open the image:
 #if defined(__APPLE__)
-    system("open callgraph.png");
+  system("open callgraph.png");
 #elif defined(_WIN32)
-    system("start callgraph.png");
+  system("start callgraph.png");
 #else
-    system("xdg-open callgraph.png");
+  system("xdg-open callgraph.png");
 #endif
-  // ------------------------------
+  std::cout << "callgraph.png generated and opened successfully.\n";
+  return true;
+}
 
-  std::cout << "callgraph.png generated successfully.\n";
+int main() {
+  std::vector<std::string> files;
+
+  while (true) {
+    std::cout << "\n=== CallGraphUML Menu ===\n"
+              << "1) Add source file\n"
+              << "2) Render graph\n"
+              << "0) Exit\n"
+              << "Choose an option: ";
+
+    int choice;
+    if (!(std::cin >> choice)) break;  // EOF or invalid input
+
+    switch (choice) {
+      case 1: {
+        std::cout << "Enter path to .cpp/.hpp file: ";
+        std::string path;
+        std::cin >> path;
+        size_t op1 = path.find(".hpp");
+        size_t op2 = path.find(".cpp");
+        if (op1 == std::string::npos && op2 == std::string::npos) {
+          std::cout << "File doesn't end with '.cpp' or '.hpp'\n";
+          break;
+        }
+        
+        files.push_back(path);
+        std::cout << "-> Added: " << path << "\n";
+        break;
+      }
+
+      case 2: {
+        if (files.empty()) {
+          std::cout << "No files to render—please add at least one source file.\n";
+        } else {
+          if (!renderGraph(files)) return 1;
+        }
+        break;
+      }
+
+      case 0:
+        std::cout << "Goodbye!\n";
+        return 0;
+
+      default:
+        std::cout << "Invalid choice, try again.\n";
+        break;
+    }
+  }
+
   return 0;
 }
