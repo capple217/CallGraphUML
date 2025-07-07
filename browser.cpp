@@ -12,20 +12,20 @@ void FileBrowser::printPath() {
     return;
   }
 
-  std::cout << "Current: " << _current << "\n";
 
   if (!fs::exists(_current)) {
     std::cout << "[!] Path does not exist.\n";
     return;
   }
   if (!fs::is_directory(_current)) {
-    std::cout << "[!] Not a directory, please go Up (U) or Reset (R) first.\n";
+    std::cout << "[!] Not a directory, please go Up (U) or Reset (R) before going down further.\n\n";
     return;
   }
 
   _children.clear();
   auto idx = 0;
 
+  std::cout << "Current: " << _current << "\n\n";
   for (auto& path : fs::directory_iterator{_current}) {
     _children.push_back(path);
     std::cout << idx << ": " << path << "\n";
