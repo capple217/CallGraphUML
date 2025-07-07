@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 
+#include "browser.hpp"
 #include "parser.hpp"
 
 bool renderGraph(const std::vector<std::string>& files) {
