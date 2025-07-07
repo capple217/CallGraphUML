@@ -44,6 +44,39 @@ int main() {
     switch (choice) {
       case 1: {
         FileBrowser browser(rootDir);
+
+        std::cout << "0. Print current path\n"
+                  << "1. Go to parent path\n"
+                  << "2. Go to child path\n"
+                  << "3. Reset path\n"
+                  << "4. Exit\n"
+                  << "Choose an option: ";
+        int choice2;
+        if (!(std::cin >> choice2)) break;
+        switch (choice2) {
+          case 1: {
+            browser.goUp();
+            break;
+                  }
+
+          case 2: {
+            browser.selectChild();
+            break;
+                 }
+
+          case 3: {
+            browser.reset();
+            break;
+                  }
+
+          case 4: {
+            browser.printPath();
+            break;
+                  }
+          default: {
+            break;
+          }
+        }
         //std::cout << "Enter path to .cpp/.hpp file: ";
         
         // Need to implement browsing here
