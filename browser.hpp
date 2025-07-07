@@ -17,10 +17,10 @@ public:
 
 private:
   std::vector<fs::path> _selected;     // All the current saved files
-  fs::path _current;                   // current point in our iteration
   fs::path _root;                      // our starting position. If we encounter issues, we can always return here
+  fs::path _current;                   // current point in our iteration
   std::vector<fs::path> _children;     // Children of the current pathway. Visited iteratively
-}
+};
 
 // Current implementation
 // 1. Display current pathway we're on:

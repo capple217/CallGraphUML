@@ -29,6 +29,7 @@ bool renderGraph(const std::vector<std::string>& files) {
 
 int main() {
   std::vector<std::string> files;
+  fs::path rootDir = fs::current_path();
 
   while (true) {
     std::cout << "\n=== CallGraphUML Menu ===\n"
@@ -42,7 +43,11 @@ int main() {
 
     switch (choice) {
       case 1: {
-        std::cout << "Enter path to .cpp/.hpp file: ";
+        FileBrowser browser(rootDir);
+        //std::cout << "Enter path to .cpp/.hpp file: ";
+        
+        // Need to implement browsing here
+
         std::string path;
         std::cin >> path;
         size_t op1 = path.find(".hpp");

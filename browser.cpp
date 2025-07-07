@@ -1,6 +1,6 @@
 #include "browser.hpp"
 
-FileBrowser::FileBrowser(fs::path rootDir) : _root{rootDir} _current {rootDir} {}
+FileBrowser::FileBrowser(fs::path rootDir) : _root{rootDir}, _current {rootDir} {}
 
 void FileBrowser::goUp() {
   _current = _current.parent_path();
@@ -33,7 +33,7 @@ void FileBrowser::selectChild() {
     return;
   }
   std::cout << "Enter the number for the path you wish to follow: ";
-  int idx;
+  size_t idx;
   std::cin >> idx;
 
   if (idx < 0 || idx >= _children.size()) {
