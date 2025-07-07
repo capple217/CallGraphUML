@@ -14,6 +14,7 @@ public:
   void reset();
 
   void selectChild();
+  fs::path current() const {return _current;}
 
 private:
   std::vector<fs::path> _selected;     // All the current saved files

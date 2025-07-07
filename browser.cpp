@@ -28,8 +28,8 @@ void FileBrowser::reset() {
 void FileBrowser::selectChild() {
   printPath();
 
-  if (_current.empty()) {
-    std::cout << "This path is empty...\n";
+  if (!fs::exists(_current) || !fs::is_directory(_current)) {
+    std::cout << "Cannot list children-current is not a directory.\n";
     return;
   }
   std::cout << "Enter the number for the path you wish to follow: ";

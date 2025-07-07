@@ -45,53 +45,34 @@ int main() {
       case 1: {
         FileBrowser browser(rootDir);
 
-        std::cout << "0. Print current path\n"
-                  << "1. Go to parent path\n"
-                  << "2. Go to child path\n"
-                  << "3. Reset path\n"
-                  << "4. Exit\n"
-                  << "Choose an option: ";
-        int choice2;
-        if (!(std::cin >> choice2)) break;
-        switch (choice2) {
-          case 1: {
-            browser.goUp();
-            break;
-                  }
+        while (true) {
+          browser.printPath();
+          std::cout << "[A]dd this item [U]p [D]own [R]eset [C]ancel: ";
+          char cmd;
+          std::cin >> cmd;
+          switch(tolower(cmd)) {
+            case 'a': {
+              auto p = browser.current();
+              if (fs::is_regular_file(p) && 
+                  (p.extension() == ".cpp" || p.extension() == ".hpp" || 
+                  p.extension() == ".c" || p.extension() == ".h")) {
+                files.push_back(p.string());
+                std::cout << "Added " << p << "\n";
+              }
+              else {
+                std::cout << "Not a valid .cpp/.hpp/.c/.h file\n";
+              }
+              goto done_adding;       // May change control flow to allow only one add per command
+            }
 
-          case 2: {
-            browser.selectChild();
-            break;
-                 }
-
-          case 3: {
-            browser.reset();
-            break;
-                  }
-
-          case 4: {
-            browser.printPath();
-            break;
-                  }
-          default: {
-            break;
+            case 'u': browser.goUp(); break;
+            case 'd': browser.selectChild(); break;
+            case 'r': browser.reset(); break;
+            case 'c': goto done_adding;
+            default: std::cout << "Unkown cmd\n"; break;
           }
         }
-        //std::cout << "Enter path to .cpp/.hpp file: ";
-        
-        // Need to implement browsing here
-
-        std::string path;
-        std::cin >> path;
-        size_t op1 = path.find(".hpp");
-        size_t op2 = path.find(".cpp");
-        if (op1 == std::string::npos && op2 == std::string::npos) {
-          std::cout << "File doesn't end with '.cpp' or '.hpp'\n";
-          break;
-        }
-        
-        files.push_back(path);
-        std::cout << "-> Added: " << path << "\n";
+        done_adding:
         break;
       }
 
