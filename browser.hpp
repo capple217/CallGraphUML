@@ -3,13 +3,13 @@
 #include <iostream>
 #include <filesystem>
 #include <vector>
+#include <system_error>
 
 namespace fs = std::filesystem;
 
 class FileBrowser {
 public:
-  FileBrowser(fs::path rootDir);
-  void goUp();
+  FileBrowser(fs::path rootDir); void goUp();
   void printPath();
   void reset();
 
