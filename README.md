@@ -12,8 +12,11 @@ We use LibClang’s C-API to parse a translation unit, walk its AST, and pick ou
 
 3. Function-call expressions
 
-    TO-DO:
-        - In the name of making the user experience better, we are going to build a terminal‑based “tree browser” such that we can traverse all of our files
-        and look for whatever we want the program to run.
+TO-DO:
+        AST Coverage & Graph Completeness:
+        - Consider including variables that call upon functions as their final destination
+        - Potential difference in color coding to seperate classes and functions
+        - Consider testing for lambda expressions
+        - Test overload
 
         
