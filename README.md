@@ -14,9 +14,14 @@ We use LibClang’s C-API to parse a translation unit, walk its AST, and pick ou
 
 TO-DO:
         AST Coverage & Graph Completeness:
-        - Consider including variables that call upon functions as their final destination
-        - Potential difference in color coding to seperate classes and functions
-        - Consider testing for lambda expressions
-        - Test overload
+            - Consider including variables that call upon functions as their final destination
+            - Potential difference in color coding to seperate classes and functions
+            - Consider testing for lambda expressions
+            - Test overload
+
+        Interface:
+            - Reset terminal output after every input
+            - Show only files that end with cpp/hpp/c/h
+
 
         
