@@ -6,6 +6,14 @@
 #include "browser.hpp"
 #include "parser.hpp"
 
+void clearScreen() {
+#if defined(_WIN32)
+  system("cls");
+#else
+  system("clear");
+#endif
+}
+
 bool renderGraph(const std::vector<std::string>& files) {
   ClangParser parser(files);
   parser.traverse();
@@ -32,6 +40,7 @@ int main() {
   fs::path rootDir = fs::current_path();
 
   while (true) {
+
     std::cout << "\n=== CallGraphUML Menu ===\n"
               << "1) Add source file\n"
               << "2) Render graph\n"
@@ -65,11 +74,11 @@ int main() {
               goto done_adding;       // May change control flow to allow only one add per command
             }
 
-            case 'u': browser.goUp(); break;
-            case 'd': browser.selectChild(); break;
-            case 'r': browser.reset(); break;
-            case 'c': goto done_adding;
-            default: std::cout << "Unkown cmd\n"; break;
+            case 'u': clearScreen(); browser.goUp(); break;
+            case 'd': clearScreen(); browser.selectChild(); break;
+            case 'r': clearScreen(); browser.reset(); break;
+            case 'c': clearScreen(); goto done_adding;
+            default: clearScreen(); std::cout << "Unkown cmd\n"; break;
           }
         }
         done_adding:
