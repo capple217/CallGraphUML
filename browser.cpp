@@ -26,10 +26,25 @@ void FileBrowser::printPath() {
   auto idx = 0;
 
   std::cout << "Current: " << _current << "\n\n";
-  for (auto& path : fs::directory_iterator{_current}) {
-    _children.push_back(path);
-    std::cout << idx << ": " << path << "\n";
-    idx++;
+  for (const auto& entry : fs::directory_iterator{_current}) {
+    const auto& path = entry.path();
+
+    if (fs::is_directory(path)) {
+      _children.push_back(path);
+      std::cout << idx++ << ": [DIR] " << path.filename() << "\n";
+    }
+
+    else if (fs::is_regular_file(path)) {
+      auto ext = path.extension().string();
+      if (ext == ".cpp" || ext == ".hpp" || ext == ".c" || ext == "h") {
+        _children.push_back(path);
+        std::cout << idx++ << "      " << path.filename() << "\n";
+      }
+    }
+  }
+
+  if (_children.empty()) {
+    std::cout << "(No valid source files or folders found in this directory)\n";
   }
 }
 
